@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+</head>
+<body>
+    <h1>Invoice for Reservation #{{ invoice.reservation.id }}</h1>
+    
+    <p><strong>Room Charge:</strong> ${{ invoice.room_charge }}</p>
+    <p><strong>Restaurant Order:</strong> ${{ invoice.restaurant_order.total_price }}</p>
+    <p><strong>Additional Services:</strong> ${{ invoice.additional_services }}</p>
+    <p><strong>Total Amount:</strong> ${{ invoice.total_amount }}</p>
+    
+    <h3>Status: {{ invoice.payment_status }}</h3>
+    
+    <form action="{% url 'process_payment' invoice.id %}" method="post">
+        {% csrf_token %}
+        <label for="payment_method">Payment Method:</label>
+        <select name="payment_method" id="payment_method">
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Cash">Cash</option>
+            <option value="Mobile Payment">Mobile Payment</option>
+        </select>
+        <button type="submit">Pay Now</button>
+    </form>
+</body>
+</html>

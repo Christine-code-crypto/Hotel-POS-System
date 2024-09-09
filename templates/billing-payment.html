@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Process Payment</title>
+</head>
+<body>
+    <h1>Processing Payment for Invoice #{{ invoice.id }}</h1>
+    <p>Total Amount: ${{ invoice.total_amount }}</p>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="payment_method">Choose Payment Method:</label>
+        <select name="payment_method" id="payment_method">
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Cash">Cash</option>
+            <option value="Mobile Payment">Mobile Payment</option>
+        </select>
+        <button type="submit">Submit Payment</button>
+    </form>
+</body>
+</html>

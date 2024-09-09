@@ -1,0 +1,165 @@
+{% extends 'allinclude.html' %}
+{% block title %}
+   Online Booking page
+{% endblock %}
+{% block contant %}
+
+{% load static %}
+<!--================Slider Start=================-->
+<section id="slider_booking">
+    <div class="slider_book_Pic" style="background: url({% static 'Allfiles/photo/slider-1.jpg' %})">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-10">
+                    <div class="slider_booking_text">
+                        <h4>HOTEL SERVICE</h4>
+                        <a href="{% url 'Home' %}">Home</a> <i class="fas fa-slash"></i> <a href="#">Online Booking</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--================Booking part Start=================-->
+<section id="Booking_part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="BOOKING_DETAILS">
+                    <div class="BOOKING_title">
+                        <h2>BOOKING DETAILS</h2>
+                        <p>Selected Room</p>
+                    </div>
+                    <div class="BOOKING_pic">
+                        <img src="{% static 'Allfiles/Photo/room-3.jpg' %}" alt="Room Image">
+                        <h4>Double Room</h4>
+                        <span><i>Ksh</i>1200/per night</span>
+                    </div>
+                    <div class="BOOKING_room_info">
+                        <div class="BOOKING_room">
+                            <h4>CHECK IN</h4>
+                            <span>3/9/2024</span>
+                        </div>
+                        <div class="BOOKING_room">
+                            <h4>ADULT</h4>
+                            <span>2</span>
+                        </div>
+                        <div class="BOOKING_room">
+                            <h4>NIGHT</h4>
+                            <span>2</span>
+                        </div>
+                    </div>
+                    <div class="BOOKING_room_info1">
+                        <div class="BOOKING_room">
+                            <h4>ADULT</h4>
+                            <span>2</span>
+                        </div>
+                        <div class="BOOKING_room1">
+                            <h4>CHILDREN</h4>
+                            <span>3</span>
+                        </div>
+                        <div class="BOOKING_room1">
+                            <h4>TOTAL PRICE</h4>
+                            <span><i>Ksh</i>1200</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="BOOKING_help">
+                    <div class="BOOKING_help_title">
+                        <h3>NEED HELP WITH BOOKING!</h3>
+                        <p>Help</p>
+                    </div>
+                    <div class="BOOKING_help_icon">
+                        <p><i class="fas fa-mobile-alt"></i></p>
+                        <span>+254114232496</span>
+                        <h6>kerubochri@gmail.com</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="BOOKING_from">
+                    <div class="BOOKING_from_title">
+                        <h3>PERSONAL INFORMATION</h3>
+                        <span>Booking form</span>
+                        <p>Welcome to Hotel Booking Management, your one-stop solution for hassle-free hotel reservations.</p>
+                    </div>
+                    <div class="BOOKING_from_info">
+                        <!-- Include the logged-in user's ID in the URL -->
+                        <form method="POST" action="{% url 'OnlineBooking' request.user.id %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="from_info1">
+                                <div class="form-group1">
+                                    <input type="date" name="Check_in" class="form-control" placeholder="Check in" required/>
+                                </div>
+                                <div class="form-group1">
+                                    <input type="date" name="Check_out" class="form-control" placeholder="Check out" required/>
+                                </div>
+                                <div class="form-group1">
+                                    <select class="form-control" name="ADULT">
+                                        <option value="1">1 Adult</option>
+                                        <option value="2">2 Adults</option>
+                                        <option value="3">3 Adults</option>
+                                        <option value="4">4 Adults</option>
+                                    </select>
+                                </div>
+                                <div class="form-group1">
+                                    <select class="form-control" name="CHILDREN">
+                                        <option value="0">No Children</option>
+                                        <option value="1">1 Child</option>
+                                        <option value="2">2 Children</option>
+                                        <option value="3">3 Children</option>
+                                        <option value="4">4 Children</option>
+                                    </select>
+                                </div>
+                                <div class="form-group1">
+                                    <input type="text" name="Name" class="form-control" placeholder="Name" required />
+                                </div>
+                                <div class="form-group1">
+                                    <input type="text" name="Surname" class="form-control" placeholder="Surname" required />
+                                </div>
+                                <div class="form-group1">
+                                    <input type="email" name="Email" class="form-control" placeholder="Email" required />
+                                </div>
+                                <div class="form-group1">
+                                    <input type="tel" name="Phone_Number" class="form-control" placeholder="Phone Number" required />
+                                </div>
+                                <div class="form-group1">
+                                    <input type="text" name="City" class="form-control" placeholder="City" required />
+                                </div>
+                                <div class="form-group1">
+                                    <input type="text" name="Country" class="form-control" placeholder="Country" required />
+                                </div>
+                                <!-- Add this section for room selection -->
+                                <div class="form-group1">
+                                    <label for="Select_Room">Select Room:</label>
+                                    <select class="form-control" name="Select_Room" id="Select_Room" required>
+                                       {% for room in available_rooms %}
+                                          <option value="{{ room.Room_Number }}">{{ room.Room_Number }} - {{ room.Room_Type }}</option>
+                                       {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group1">
+                                    <input type="file" name="Img" class="form-control" required />
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="checkbox3">
+                                <input type="checkbox" name="check" required /><label for="">I Agree The Terms & Conditions</label>
+                            </div>
+                            <div class="onlineBooking_btn">
+                                <button type="submit">BOOK NOW</button>
+                            </div>
+                            <div class="onlineBooking_btn">
+                                <button type="reset">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================Booking part end=================-->
+{% endblock %}

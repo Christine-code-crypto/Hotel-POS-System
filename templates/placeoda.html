@@ -1,0 +1,33 @@
+
+<form method="POST">
+    {% csrf_token %}
+    <h2>Place an Order</h2>
+
+    <label for="order_type">Order Type:</label>
+    <select name="order_type" id="order_type">
+        <option value="Room Service">Room Service</option>
+        <option value="Table Service">Table Service</option>
+    </select>
+
+    <div id="room_number_section">
+        <label for="room_number">Room Number (for Room Service):</label>
+        <input type="text" name="room_number" id="room_number" placeholder="e.g., Room106">
+
+    </div>
+
+    <div id="table_number_section">
+        <label for="table_number">Table Number (for Table Service):</label>
+        <input type="text" name="table_number" id="table_number">
+    </div>
+
+    <h3>Menu</h3>
+    {% for item in menu_items %}
+        <div>
+            <label>{{ item.name }} - ${{ item.price }}</label>
+            <input type="number" name="item_{{ item.id }}" min="0" max="{{ item.stock }}">
+        </div>
+    {% endfor %}
+
+    <button type="submit">Place Order</button>
+</form>
+
